@@ -58,17 +58,19 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             Debug.Log("Hit");
-            Damage(50);
+            Damage(collision.gameObject.GetComponent<projectile>().getDamage());
             Destroy(collision.gameObject);
         }
     }
     public void Damage(float damagePoints)
     {
-        CurrHealth =- damagePoints;
-        
+        CurrHealth = CurrHealth - damagePoints;
+        animatorController.Play("Jump");
+
         if (CurrHealth <= 0f)
         {
             animatorController.Play("Death");
+            Invoke("Die", 2f);
         }
     }
 

@@ -9,7 +9,7 @@ public class EnemyStrikingDistanceCheck : MonoBehaviour
 
     private void Awake()
     {
-        PlayerTarget = GameObject.FindGameObjectWithTag("Player");
+        PlayerTarget = GameObject.FindGameObjectWithTag("PlayerFollowByEnemy");
 
         _enemy = GetComponentInParent<Enemy>();
     }

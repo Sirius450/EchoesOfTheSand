@@ -10,7 +10,7 @@ public class EnemyChaseState : EnemyState
 
     public EnemyChaseState(Enemy enemy, EnemyStateMachine fsm) : base(enemy, fsm)
     {
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerTransform = GameObject.FindGameObjectWithTag("PlayerFollowByEnemy").transform;
         
     }
      
@@ -22,9 +22,6 @@ public class EnemyChaseState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-
-        Debug.Log("Hello from the chase state");
-        Console.Write("Hello from chase state");
 
     }
 

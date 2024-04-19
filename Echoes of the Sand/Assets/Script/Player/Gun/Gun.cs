@@ -12,7 +12,6 @@ public class Gun : MonoBehaviour
     [SerializeField] Transform holster;
     [SerializeField] Transform aimPos;
 
-    [SerializeField] float bulletSpeed = 10;
     [SerializeField] float shootingRate = 2f;
     [SerializeField] float shootingCooldown = 0f;
 
@@ -21,6 +20,9 @@ public class Gun : MonoBehaviour
     [SerializeField] float energyUsedPerShot = 0.5f;
 
     Aim aim;
+
+    private Ray ray;
+
 
     public bool isAiming, isShooting /*shotOnce*/ ;
 
@@ -69,56 +71,28 @@ public class Gun : MonoBehaviour
         if (context.started)
         {
 
-            if (energyBar.GetComponent<Health_Bar>().isEmpty(energyUsedPerShot))
+            if (energyBar.GetComponent<Health_Bar>().isEmpty(energyUsedPerShot) || !isAiming)
             {
                 return;
             }
-            /*
-            Vector3 cameraForward = Camera.main.transform.forward;
-            
-            Vector3 screenCenter = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, Camera.main.nearClipPlane));
+  
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+            RaycastHit hit;
+            Quaternion rotation = Quaternion.identity;
 
-            // Calculate bullet spawn point direction to center of the screen 
-            Vector3 directionToCenter = (screenCenter - transform.position).normalized;
-
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-
-            //Set velocity of bullet towards center
-            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-
-            if (bullet != null)
+            if (Physics.Raycast(ray, out hit))
             {
-                //bullet.transform.Translate(directionToCenter * bulletSpeed * Time.deltaTime);
-                
-                bulletRigidbody.velocity = directionToCenter * bulletSpeed;
+                Vector3 direction = hit.point - bulletSpawnPoint.position;
+                rotation = Quaternion.LookRotation(direction);
             }
-            */
-            // Get the center of the screen in world space
-            Vector3 screenCenter = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, Camera.main.nearClipPlane));
-
-            // Calculate direction towards the center of the screen from the player's position
-            Vector3 direction = (screenCenter - bulletSpawnPoint.transform.position).normalized;
-
-            // Raycast from the camera through the center of the screen
-            Ray ray = new Ray(Camera.main.transform.position, -direction);
-
-            // Check if the ray hits something in the scene
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            else
             {
-                // Calculate direction from player to the point where the ray hit
-                direction = (hit.point - bulletSpawnPoint.transform.position).normalized;
+                rotation = Quaternion.LookRotation(ray.direction);
             }
 
-            // Instantiate the bullet at the current position of the player
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, Quaternion.identity);
 
-            // Access the Rigidbody component of the instantiated bullet and set its velocity
-            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-            if (bulletRigidbody != null)
-            {
-                bulletRigidbody.velocity = -direction * bulletSpeed;
-            }
+            Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, rotation);
 
             energyBar.GetComponent<Health_Bar>().useEnergy(energyUsedPerShot);
         }
@@ -127,13 +101,10 @@ public class Gun : MonoBehaviour
 
     }
 
-    private Vector3 getMiddleOfScreen()
+    private void OnDrawGizmos()
     {
-        // Calculate the direction towards the center of the screen
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        Vector3 centerScreenDirection = ray.direction;
-        return centerScreenDirection;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(ray.origin, ray.origin + ray.direction * 1000);
     }
-
 }
 

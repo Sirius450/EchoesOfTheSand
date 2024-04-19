@@ -1,27 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class projectile : MonoBehaviour
 {
-    [SerializeField] public float lifeSpame = 5f;
+    [SerializeField] private float speed = 10;
+    [SerializeField] private float damage = 25;
+    [SerializeField] private float lifeTime = 10;
 
 
-    // Update is called once per frame
+      void Start()
+    {
+        Invoke(nameof(DestroyProjectile), lifeTime);
+    }
+    
     void Update()
     {
-
-        if (lifeSpame <= 0)
-        {
-            Destroy(gameObject);
-        }
-        else { lifeSpame -= Time.deltaTime; }
+        transform.Translate(Vector3.forward * (speed * Time.deltaTime));
     }
-
-    private void OnTriggerEnter(Collider other)
+ 
+    private void DestroyProjectile()
     {
-        if (!other.CompareTag("Player"))
-        { Destroy(gameObject); }
-
+        Destroy(this.gameObject);
     }
+    public float getDamage() => damage;
 }

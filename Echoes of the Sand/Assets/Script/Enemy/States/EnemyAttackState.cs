@@ -14,7 +14,7 @@ public class EnemyAttackState : EnemyState
     private float _timeBetweenShots = 2f;
     public EnemyAttackState(Enemy enemy, EnemyStateMachine fsm) : base(enemy, fsm)
     {
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerTransform = GameObject.FindGameObjectWithTag("PlayerFollowByEnemy").transform;
     }
 
     public override void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType)
@@ -26,7 +26,7 @@ public class EnemyAttackState : EnemyState
     {
         base.EnterState();
         enemy.GetComponent<Animator>().Play("attack");
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().TakeDamage();
+        GameObject.FindGameObjectWithTag("PlayerFollowByEnemy").GetComponent<PlayerManager>().TakeDamage();
     }
 
     public override void ExitState()
@@ -46,7 +46,7 @@ public class EnemyAttackState : EnemyState
             _timer = 0f;
 
             enemy.GetComponent<Animator>().Play("attack");
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().TakeDamage();
+            GameObject.FindGameObjectWithTag("PlayerFollowByEnemy").GetComponent<PlayerManager>().TakeDamage();
 
         }
 
@@ -56,7 +56,7 @@ public class EnemyAttackState : EnemyState
             
             if(_exitTimer > _timerTillExit)
             {
-                Debug.Log("CHANGED TO CHASE");
+
                 enemy.StateMachine.ChangeState(enemy.ChaseState);
             }
         }
@@ -66,7 +66,6 @@ public class EnemyAttackState : EnemyState
             
         }
         _timer += Time.deltaTime;
-       
 
     }
 

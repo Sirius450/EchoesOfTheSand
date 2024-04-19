@@ -39,7 +39,7 @@ public class Health_Bar : MonoBehaviour
     public void Hit()
     {
 
-        healthBarValue.value -= 0.05f;
+        healthBarValue.value -= 0.25f;
         if (isHealth)
         {
 
