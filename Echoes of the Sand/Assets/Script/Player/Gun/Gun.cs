@@ -26,6 +26,7 @@ public class Gun : MonoBehaviour
 
     public bool isAiming, isShooting /*shotOnce*/ ;
 
+    [SerializeField] private string audioClipNamePew = "pewpew";
 
 
     private void Awake()
@@ -70,6 +71,8 @@ public class Gun : MonoBehaviour
     {
         if (context.started)
         {
+            AudioManager.Singleton.PlayAudio(audioClipNamePew);
+
 
             if (energyBar.GetComponent<Health_Bar>().isEmpty(energyUsedPerShot) || !isAiming)
             {

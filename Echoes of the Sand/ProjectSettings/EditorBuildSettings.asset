@@ -5,6 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu_Scene.unity
+    guid: 66a6825daf808c043a4e234d16ed2af9
+  - enabled: 1
+    path: Assets/Scenes/ForgettenWorld 1.unity
+    guid: c39935387cf99db4ca51691feaa97259
   - enabled: 0
     path: Assets/Scenes/Test_Scene.unity
     guid: 99c9720ab356a0642a771bea13969a05
