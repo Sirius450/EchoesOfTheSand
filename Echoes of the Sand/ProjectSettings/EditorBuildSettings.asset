@@ -5,16 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Menu_Scene.unity
     guid: 66a6825daf808c043a4e234d16ed2af9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ForgettenWorld 1.unity
     guid: c39935387cf99db4ca51691feaa97259
   - enabled: 0
     path: Assets/Scenes/Test_Scene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ForgettenWorld.unity
     guid: c06ff4495a9553c43ba8f71545acedea
+  - enabled: 1
+    path: Assets/Scenes/MapMagic.unity
+    guid: 97cb1c7c25647414e80a2fcd6b2a923e
   m_configObjects: {}
